@@ -7,7 +7,7 @@
 #include "Styling/CoreStyle.h"
 
 #include "Misc/FileHelper.h"
-#include "DesktopPlatform/Public/DesktopPlatformModule.h"
+#include "DesktopPlatformModule.h"
 
 #include "LogViewerProStructs.h"
 

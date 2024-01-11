@@ -65,6 +65,7 @@ public:
 
 	void CleanupAll();
 	void CleanupMessagesOnly();
+	void CleanUpFilters();
 
 	void SelectAllByCategory(FName Category);
 
@@ -134,6 +135,7 @@ private:
 
 	bool bIsFollowLog;
 
+	void HandlePreBeginPIE(bool bIsSimulating);
 	void HandleBeginPIE(bool bIsSimulating);
 
 	float GetListContainerWidth() const;

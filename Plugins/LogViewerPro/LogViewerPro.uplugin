@@ -1,7 +1,7 @@
 {
 	"FileVersion": 3,
 	"Version": 1,
-	"VersionName": "1.112",
+	"VersionName": "1.239",
 	"FriendlyName": "LogViewerPro",
 	"Description": "Professional tool to work with unreal engine logs, with colorcoding, convenient filtering and many more logging related features",
 	"Category": "Editor",
@@ -10,7 +10,7 @@
 	"DocsURL": "",
 	"MarketplaceURL": "com.epicgames.launcher://ue/marketplace/content/e473b6f483ba43a2a7ff13dd5be5a1bc",
 	"SupportURL": "",
-	"EngineVersion": "5.2.0",
+	"EngineVersion": "5.3.0",
 	"CanContainContent": false,
 	"Installed": true,
 	"Modules": [

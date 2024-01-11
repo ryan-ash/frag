@@ -129,7 +129,7 @@ void FLogViewerProOutputDevice::ProcessBufferedLines()
 		{
 			//OnLogMessageReceivedDelegate.ExecuteIfBound(MakeShared<FLogMessage>(FString(Line.Data), Line.Verbosity, Line.Category, FName(TEXT("Log.Command"))));
 			//OnLogMessageReceivedDelegate.Broadcast(MakeShared<FLogMessage>(FString(Line.Data), Line.Verbosity, Line.Category, FName(TEXT("Log.Command"))));
-			OnLogMessageReceivedDelegate.Broadcast(MakeShared<FLogMessage>(FString(Line.Data), Line.Verbosity, Line.Category, FName(TEXT("Log.Command"))));
+			OnLogMessageReceivedDelegate.Broadcast(MakeShared<FLogMessage>(FString(Line.Data.Get()), Line.Verbosity, Line.Category, FName(TEXT("Log.Command"))));
 			//MessagesTextMarshaller->AppendPendingMessage(Line.Data, Line.Verbosity, Line.Category);
 		}
 		BufferedLines.Empty(32);

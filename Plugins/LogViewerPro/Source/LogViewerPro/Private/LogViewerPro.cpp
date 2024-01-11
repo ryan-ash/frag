@@ -220,7 +220,7 @@ TSharedRef<SDockTab> FLogViewerProModule::OnSpawnTabNewDocument()
 				[
 					SNew(STextBlock)
 					.Justification(ETextJustify::Type::Right)
-					.Text(FText::FromString(TEXT("Log Viewer Pro v1.112\r\nby Dmitrii Labadin\r\nYour support matters!")))
+					.Text(FText::FromString(TEXT("Log Viewer Pro v1.239\r\nby Dmitrii Labadin\r\nYour support matters!")))
 				]
 		];
 	NewTab->SetOnTabActivated(SDockTab::FOnTabActivatedCallback::CreateRaw(this, &FLogViewerProModule::OnOpenNewTabClicked));

@@ -5,7 +5,7 @@
 #include "LogViewerProWidgetMain.h"
 #include "LogViewerProSettingsButton.h"
 #include "SlateOptMacros.h"
-#include "DesktopPlatform/Public/IDesktopPlatform.h"
+#include "IDesktopPlatform.h"
 #include "Styling/CoreStyle.h"
 #include "Widgets/Layout/SBorder.h"
 #include "Widgets/SBoxPanel.h"
@@ -13,13 +13,13 @@
 #include "ProjectDescriptor.h"
 #include "EditorDirectories.h"
 #include "Settings/EditorSettings.h"
-#include "MainFrame/Public/Interfaces/IMainFrameModule.h"
+#include "Interfaces/IMainFrameModule.h"
 #include "HAL/FileManager.h"
 #include "Engine/Engine.h"
 #include "Widgets/Layout/SBox.h"
 #include "Widgets/DOcking/SDockTab.h"
 #include "Widgets/Input/SSearchBox.h"
-#include "DesktopPlatform/Public/DesktopPlatformModule.h"
+#include "DesktopPlatformModule.h"
 #include "Misc/FileHelper.h"
 #include "LogViewerProStructs.h"
 
@@ -631,6 +631,10 @@ void SLogViewerProWidgetTopBar::OnHighlightTextChanged(const FText& InFilterText
 	{
 		OnHighlightTextCommitted(InFilterText, ETextCommit::OnCleared);
 	}
+	else
+	{
+		HighlightDesiredText(InFilterText, false);
+	}
 }
 
 void SLogViewerProWidgetTopBar::OnHighlightTextCommitted(const FText& InFilterText, ETextCommit::Type InCommitType)
@@ -638,9 +642,13 @@ void SLogViewerProWidgetTopBar::OnHighlightTextCommitted(const FText& InFilterTe
 	//Mega logic, because UE clear button in the text box is not Commit, but only TextChanged to ""
 	//because of that I have to support custom behavior in case when text was cleared and not refocus to ListView in the MainWidget
 	const bool bFocusToList = InCommitType == ETextCommit::OnCleared ? false : true; 
+	HighlightDesiredText(InFilterText, bFocusToList);
+}
 
+void SLogViewerProWidgetTopBar::HighlightDesiredText(const FText& InFilterText, bool bFocusToList)
+{
 	MainWidget->SetHighlightText(InFilterText, bFocusToList);
-	MainWidget->Refresh();
+	//MainWidget->Refresh();
 }
 
 void SLogViewerProWidgetTopBar::OnFindNextPressed(ECheckBoxState CheckState)

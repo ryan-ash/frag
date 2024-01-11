@@ -47,6 +47,8 @@ public:
 	void OpenLog();
 	void Cleanup();
 
+	void HighlightDesiredText(const FText& InFilterText, bool bFocusToList);
+
 	SLogViewerProSettingsButton* GetSettings() const {return SettingsButton.Get(); };
 private:
 
@@ -68,6 +70,7 @@ private:
 	void OnFilterTextCommitted(const FText& InFilterText, ETextCommit::Type InCommitType);
 	void OnHighlightTextChanged(const FText& InFilterText);
 	void OnHighlightTextCommitted(const FText& InFilterText, ETextCommit::Type InCommitType);
+
 	void OnFindNextPressed(ECheckBoxState CheckState);
 	void OnFindPrevPressed(ECheckBoxState CheckState);
 

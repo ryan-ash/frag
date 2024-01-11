@@ -41,7 +41,7 @@ static const float ColumnFrameWidth = 0.03f;
 BEGIN_SLATE_FUNCTION_BUILD_OPTIMIZATION
 void SLogViewerProWidgetMain::Construct( const FArguments& InArgs )
 {
-	FEditorDelegates::PreBeginPIE.AddRaw(this, &SLogViewerProWidgetMain::HandleBeginPIE);
+
 
 	LogDevice = InArgs._LogOutputDevice;
 	LogViewerProModule = InArgs._Module;
@@ -192,15 +192,27 @@ void SLogViewerProWidgetMain::Construct( const FArguments& InArgs )
 
 	GetSettings()->TryLoadAndApplySettings();
 
+	FEditorDelegates::PreBeginPIE.AddRaw(this, &SLogViewerProWidgetMain::HandlePreBeginPIE);
+	FEditorDelegates::BeginPIE.AddRaw(this, &SLogViewerProWidgetMain::HandleBeginPIE);
+
 	BeginListenEngine();
 }
 
-void SLogViewerProWidgetMain::HandleBeginPIE(bool bIsSimulating)
+void SLogViewerProWidgetMain::HandlePreBeginPIE(bool bIsSimulating)
 {
 	if(IsListeningEngine() && GetSettings()->IsCleanUpLogsOnPie())
 	{
 		this->CleanupMessagesOnly();
 	}
+}
+
+void SLogViewerProWidgetMain::HandleBeginPIE(bool bIsSimulating)
+{
+	if (!TopBar.IsValid()) //just a to be extra safe, because I don't know new initialization order, and do things on beginPIE
+	{
+		return;
+	}
+	TopBar->HighlightDesiredText(TopBar->HighlightTextBox->GetText(), false);
 }
 
 void SLogViewerProWidgetMain::Tick(const FGeometry& AllottedGeometry, const double InCurrentTime, const float InDeltaTime)
@@ -213,6 +225,7 @@ void SLogViewerProWidgetMain::Tick(const FGeometry& AllottedGeometry, const doub
 SLogViewerProWidgetMain::~SLogViewerProWidgetMain()
 {
 	FEditorDelegates::PreBeginPIE.RemoveAll(this);
+	FEditorDelegates::BeginPIE.RemoveAll(this);
 }
 
 END_SLATE_FUNCTION_BUILD_OPTIMIZATION
@@ -375,21 +388,23 @@ void SLogViewerProWidgetMain::CleanupAll()
 
 	CategoryMenu->ClearCategories();
 	TopBar->Cleanup();
-	LogMessages.Reset();
-	AvailableLogs.Reset();
-	SetHighlightText(FText(), false);
-	Refresh();
+	CleanUpFilters();
+	CleanupMessagesOnly();
 }
 
 void SLogViewerProWidgetMain::CleanupMessagesOnly()
 {
 	DetailedMessageView->SetText(FText());
 
-	TopBar->Cleanup();
 	LogMessages.Reset();
 	AvailableLogs.Reset();
 	SetHighlightText(FText(), false);
 	Refresh();
+}
+
+void SLogViewerProWidgetMain::CleanUpFilters()
+{
+	TopBar->Cleanup();
 }
 
 void SLogViewerProWidgetMain::SelectAllByCategory(FName Category)

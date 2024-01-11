@@ -62,7 +62,7 @@ void SLogViewerProWidgetMinimap::CreateTexture()
 		NewTexture->AddToRoot();
 
 		Brush.SetResourceObject(NewTexture);
-		Brush.ImageSize = FDeprecateSlateVector2D((float)TextureWidth, (float)TextureHeight);
+		Brush.ImageSize = FVector2f(TextureWidth, TextureHeight);
 		Brush.DrawAs = ESlateBrushDrawType::Image;
 
 		FTexture2DMipMap& Mip = NewTexture->GetPlatformData()->Mips[0];

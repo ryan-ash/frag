@@ -15,6 +15,9 @@ public:
 	// Sets default values for this character's properties
 	AFragCharacter();
 
+	UFUNCTION(BlueprintCallable, Category = "FragCharacter")
+	void ResetJumpCounter();
+
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;

@@ -11,6 +11,12 @@ AFragCharacter::AFragCharacter()
 
 }
 
+void AFragCharacter::ResetJumpCounter()
+{
+	JumpCurrentCount = 0;
+	JumpCurrentCountPreJump = 0;
+}
+
 // Called when the game starts or when spawned
 void AFragCharacter::BeginPlay()
 {
